@@ -1,0 +1,51 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor swap files
+*.swp
+*.swo
+
+# IDE settings
+.idea/
+.vscode/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+mypy_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.hypothesis/
+.ipynb_checkpoints/
+
+# Python packaging and build artifacts
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+dist/
+build/
+
+# Python coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+
+# Go artifacts
+pkg/
+*.test
+coverage.out
+
+# Local environment / secrets
+.env
+.env.*
+*.local

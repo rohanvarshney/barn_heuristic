@@ -93,7 +93,7 @@ def generate_mock_user_ratings(
     users: list[UserRatings] = []
 
     for u in range(user_count):
-        user_id = f"user_{u+1:02d}"
+        user_id = f"user_{u + 1:02d}"
         restaurant_count = rng.randint(min_restaurants, max_restaurants)
 
         rr: list[RestaurantRating] = []
@@ -115,6 +115,10 @@ def flatten_ratings(users: Iterable[UserRatings]) -> list[dict]:
     for user in users:
         for r in user.ratings:
             items.append(
-                {"user_id": user.user_id, "restaurant_name": r.restaurant_name, "score": r.rating}
+                {
+                    "user_id": user.user_id,
+                    "restaurant_name": r.restaurant_name,
+                    "score": r.rating,
+                }
             )
     return items

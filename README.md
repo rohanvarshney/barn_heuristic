@@ -1,6 +1,7 @@
 # Ranking Normalization SDK
 
-[![CI](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/ci.yml)
+[![CI](https://github.com/rohanvarshney/barn_heuristic/actions/workflows/ci.yml/badge.svg)](https://github.com/rohanvarshney/barn_heuristic/actions/workflows/ci.yml)
+[![Pages](https://github.com/rohanvarshney/barn_heuristic/actions/workflows/pages.yml/badge.svg)](https://github.com/rohanvarshney/barn_heuristic/actions/workflows/pages.yml)
 
 Cross-language SDK (Python + Go) for redistributing crowded numeric ratings on the `(1.0, 10.0]` scale into a more even spread while preserving relative ordering.
 
@@ -82,6 +83,16 @@ func main() {
 }
 ```
 
+## Web visualizer demo
+
+- Live demo (GitHub Pages): `https://rohanvarshney.github.io/barn_heuristic/`
+- Implementation guide: `docs/web-ui-visualizer.md`
+- Features:
+  - realtime synchronized scatter + histogram/CDF animation
+  - all 3 algorithm toggles (`quantile_map`, `zscore_sigmoid`, `piecewise_bucket`)
+  - deterministic seeded mock data generation
+  - playback speed and piecewise bucket controls
+
 ## Complexity
 
 - Sorting-based strategies are `O(n log n)`.
@@ -96,6 +107,8 @@ func main() {
 
 - Python tests: `PYTHONPATH=python python -m pytest python/tests`
 - Go tests: `cd go && go test ./...`
+- Web app local dev: `cd web && npm install && npm run dev`
+- Web app test/check/build: `cd web && npm run test && npm run check && npm run build`
 - Install pre-commit: `python -m pip install pre-commit`
 - Enable hooks: `pre-commit install`
 - Run on all files: `pre-commit run --all-files`

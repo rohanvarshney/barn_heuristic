@@ -28,6 +28,7 @@ mypy_cache/
 .eggs/
 *.egg
 pip-wheel-metadata/
+node_modules/
 dist/
 build/
 

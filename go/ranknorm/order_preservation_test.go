@@ -91,4 +91,3 @@ func TestOrderPreservationPiecewiseBucket(t *testing.T) {
 	}
 	assertOrderPreserved(t, items, out)
 }
-

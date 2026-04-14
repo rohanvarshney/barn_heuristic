@@ -1,0 +1,189 @@
+:root {
+  color: #d7dcec;
+  background: radial-gradient(circle at top, #161f36, #090d1a 60%);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+main {
+  display: grid;
+  gap: 16px;
+}
+
+header {
+  padding: 14px 4px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+}
+
+p {
+  margin: 0;
+  color: #b4bbcf;
+}
+
+.panel,
+.viz-card,
+.meta {
+  border: 1px solid #334164;
+  border-radius: 14px;
+  background: rgba(13, 22, 45, 0.72);
+  backdrop-filter: blur(4px);
+  padding: 14px;
+}
+
+.panel h2,
+.viz-card h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.panel {
+  display: grid;
+  gap: 10px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+select,
+input[type='number'] {
+  background: #111a34;
+  border: 1px solid #364774;
+  color: #d7dcec;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+input[type='range'] {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  border: 1px solid #4f67aa;
+  background: #1d2d59;
+  color: #eef3ff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #263a73;
+}
+
+.hint {
+  font-size: 0.83rem;
+}
+
+.meta {
+  display: grid;
+  gap: 6px;
+}
+
+svg {
+  width: 100%;
+  height: auto;
+}
+
+.axis {
+  stroke: #5870ad;
+  stroke-width: 1;
+}
+
+.grid {
+  stroke: #22345e;
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+}
+
+.tick {
+  fill: #9eb1dd;
+  font-size: 10px;
+}
+
+circle {
+  fill: #85d6ff;
+  opacity: 0.65;
+}
+
+.hist-before {
+  fill: #6275ad55;
+}
+
+.hist-after {
+  fill: #7de39f40;
+}
+
+.hist-current {
+  fill: #72b8ff66;
+}
+
+.cdf-before,
+.cdf-after,
+.cdf-current {
+  fill: none;
+  stroke-width: 2;
+}
+
+.cdf-before {
+  stroke: #6f86bf;
+}
+
+.cdf-after {
+  stroke: #8bf2ad;
+}
+
+.cdf-current {
+  stroke: #a8cdff;
+}
+
+.legend {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 0.84rem;
+}
+
+.legend .before {
+  color: #90a4dd;
+}
+
+.legend .current {
+  color: #b9d7ff;
+}
+
+.legend .after {
+  color: #a8ffc4;
+}

@@ -8,7 +8,9 @@ def test_mock_data_is_deterministic():
 
 
 def test_mock_data_shape_and_bounds():
-    users = generate_mock_user_ratings(seed=999, user_count=10, min_restaurants=50, max_restaurants=500)
+    users = generate_mock_user_ratings(
+        seed=999, user_count=10, min_restaurants=50, max_restaurants=500
+    )
     assert len(users) == 10
     for u in users:
         assert 50 <= len(u.ratings) <= 500

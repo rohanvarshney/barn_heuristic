@@ -36,7 +36,9 @@ def test_order_preserved_after_redistribution(strategy, options):
     items = _make_items(seed=2026, n=300)
 
     original_scores = [x["score"] for x in items]
-    stable_sorted_indices = sorted(range(len(items)), key=lambda i: (original_scores[i], i))
+    stable_sorted_indices = sorted(
+        range(len(items)), key=lambda i: (original_scores[i], i)
+    )
 
     out = redistribute(items, lambda x: x["score"], strategy=strategy, options=options)
     new_scores = [x["score"] for x in out]
@@ -45,4 +47,3 @@ def test_order_preserved_after_redistribution(strategy, options):
     # then redistributed scores must also be non-decreasing.
     for prev_i, curr_i in zip(stable_sorted_indices, stable_sorted_indices[1:]):
         assert new_scores[prev_i] <= new_scores[curr_i]
-

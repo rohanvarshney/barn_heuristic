@@ -89,4 +89,3 @@ func FlattenRatings(users []UserRatings) []map[string]any {
 	}
 	return out
 }
-

@@ -20,7 +20,8 @@ repos:
     hooks:
       - id: gofmt
         name: gofmt
-        entry: bash -c 'gofmt -w "$@"'
+        entry: gofmt
+        args: [-w]
         language: system
         files: ^go/.*\.go$
         pass_filenames: true

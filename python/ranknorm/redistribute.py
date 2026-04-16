@@ -43,7 +43,7 @@ def _resolve_strategy(strategy: str | Strategy) -> Strategy:
 def _validate_input(scores: Iterable[float]) -> list[float]:
     validated: list[float] = []
     for score in scores:
-        if score <= 1.0 or score > 10.0:
+        if math.isnan(score) or score <= 1.0 or score > 10.0:
             raise ValueError(f"score {score} outside supported range (1.0, 10.0]")
         validated.append(float(score))
     return validated

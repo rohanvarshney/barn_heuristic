@@ -45,6 +45,15 @@ def test_raises_on_out_of_range_score():
         assert True
 
 
+def test_raises_on_nan_score():
+    items = [{"score": float("nan")}]
+    try:
+        redistribute(items, lambda x: x["score"])
+        assert False, "expected ValueError"
+    except ValueError:
+        assert True
+
+
 def test_empty_and_single_are_supported():
     assert redistribute([], lambda x: x["score"]) == []
     single = [{"score": 7.2}]

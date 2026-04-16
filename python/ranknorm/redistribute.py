@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import enum
 import math
-from dataclasses import dataclass
 from typing import Any, Callable, Iterable
 
 EPSILON = 1e-9
@@ -15,12 +14,6 @@ class Strategy(str, enum.Enum):
     QUANTILE_MAP = "quantile_map"
     ZSCORE_SIGMOID = "zscore_sigmoid"
     PIECEWISE_BUCKET = "piecewise_bucket"
-
-
-@dataclass
-class _ScoredItem:
-    original_index: int
-    score: float
 
 
 def _clamp(score: float) -> float:
@@ -56,15 +49,12 @@ def _quantile_map(values: list[float]) -> list[float]:
     if n == 1:
         return [values[0]]
 
-    ranked = sorted(
-        [_ScoredItem(i, s) for i, s in enumerate(values)],
-        key=lambda item: (item.score, item.original_index),
-    )
+    ranked = sorted([(s, i) for i, s in enumerate(values)])
     out = [0.0] * n
     for rank, item in enumerate(ranked):
         percentile = rank / (n - 1)
         mapped = MIN_SCORE + percentile * (MAX_SCORE - MIN_SCORE)
-        out[item.original_index] = mapped
+        out[item[1]] = mapped
     return out
 
 
@@ -95,12 +85,12 @@ def _piecewise_bucket(values: list[float], buckets: int = 4) -> list[float]:
 
     bucket_count = max(2, buckets)
     width = (MAX_SCORE - MIN_SCORE) / bucket_count
-    bucketed: list[list[_ScoredItem]] = [[] for _ in range(bucket_count)]
+    bucketed: list[list[tuple[float, int]]] = [[] for _ in range(bucket_count)]
 
     for idx, score in enumerate(values):
         raw = int((score - MIN_SCORE) / width) if width > 0 else 0
         bucket_idx = max(0, min(bucket_count - 1, raw))
-        bucketed[bucket_idx].append(_ScoredItem(idx, score))
+        bucketed[bucket_idx].append((score, idx))
 
     out = [0.0] * n
     write_start = MIN_SCORE
@@ -112,16 +102,16 @@ def _piecewise_bucket(values: list[float], buckets: int = 4) -> list[float]:
         fraction = len(items) / total
         span = fraction * (MAX_SCORE - MIN_SCORE)
         write_end = min(MAX_SCORE, write_start + span)
-        sorted_items = sorted(items, key=lambda item: (item.score, item.original_index))
+        sorted_items = sorted(items)
 
         if len(sorted_items) == 1:
             mapped = _clamp((write_start + write_end) / 2.0)
-            out[sorted_items[0].original_index] = mapped
+            out[sorted_items[0][1]] = mapped
         else:
             for pos, item in enumerate(sorted_items):
                 local_p = pos / (len(sorted_items) - 1)
                 mapped = write_start + local_p * (write_end - write_start)
-                out[item.original_index] = _clamp(mapped)
+                out[item[1]] = _clamp(mapped)
         write_start = write_end
 
     return [_clamp(v) for v in out]

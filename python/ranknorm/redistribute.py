@@ -155,7 +155,7 @@ def redistribute(
             score_setter(item, _clamp(new_score))
         return items
 
-    cloned = copy.deepcopy(items)
+    cloned = [copy.copy(item) for item in items]
     for item, new_score in zip(cloned, redistributed):
         if isinstance(item, dict):
             item["score"] = _clamp(new_score)

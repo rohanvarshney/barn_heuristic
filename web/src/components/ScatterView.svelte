@@ -34,4 +34,3 @@
     {/each}
   </svg>
 </section>
-

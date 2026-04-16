@@ -60,4 +60,3 @@
     Watch the same restaurants flow from original to normalized scores. The animation keeps item identity stable across views.
   </p>
 </section>
-

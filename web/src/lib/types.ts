@@ -12,4 +12,3 @@ export type UserRatings = {
   userId: string;
   ratings: RestaurantScore[];
 };
-

@@ -1,3 +1,5 @@
+import pytest
+
 from ranknorm.redistribute import Strategy, redistribute
 
 
@@ -43,8 +45,23 @@ def test_raises_on_out_of_range_score():
         assert True
 
 
+def test_raises_on_nan_score():
+    items = [{"score": float("nan")}]
+    try:
+        redistribute(items, lambda x: x["score"])
+        assert False, "expected ValueError"
+    except ValueError:
+        assert True
+
+
 def test_empty_and_single_are_supported():
     assert redistribute([], lambda x: x["score"]) == []
     single = [{"score": 7.2}]
     out = redistribute(single, lambda x: x["score"])
     assert out[0]["score"] == 7.2
+
+
+def test_unknown_strategy_raises_value_error():
+    items = [{"score": 5.0}]
+    with pytest.raises(ValueError, match="unknown strategy: invalid_strategy"):
+        redistribute(items, lambda x: x["score"], strategy="invalid_strategy")

@@ -11,4 +11,3 @@ describe('animation utilities', () => {
     expect(lerp(2, 10, 3)).toBe(10);
   });
 });
-

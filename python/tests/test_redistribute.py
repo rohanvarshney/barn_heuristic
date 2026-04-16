@@ -1,3 +1,5 @@
+import pytest
+
 from ranknorm.redistribute import Strategy, redistribute
 
 
@@ -48,3 +50,9 @@ def test_empty_and_single_are_supported():
     single = [{"score": 7.2}]
     out = redistribute(single, lambda x: x["score"])
     assert out[0]["score"] == 7.2
+
+
+def test_unknown_strategy_raises_value_error():
+    items = [{"score": 5.0}]
+    with pytest.raises(ValueError, match="unknown strategy: invalid_strategy"):
+        redistribute(items, lambda x: x["score"], strategy="invalid_strategy")

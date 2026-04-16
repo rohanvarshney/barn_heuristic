@@ -44,4 +44,3 @@ export const lerp = (a: number, b: number, t: number): number => {
   const clampedT = Math.max(0, Math.min(1, t));
   return a + (b - a) * clampedT;
 };
-

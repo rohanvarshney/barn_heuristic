@@ -98,4 +98,3 @@ export const generateMockUsers = (
 export const flattenUsers = (users: UserRatings[]): RestaurantScore[] => {
   return users.flatMap((u) => u.ratings.map((r) => ({ ...r, id: `${u.userId}-${r.id}` })));
 };
-

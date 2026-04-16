@@ -93,6 +93,9 @@
       See how restaurant scores redistribute from crowded ranges into a normalized spread across all three
       algorithms.
     </p>
+    <p>
+      <a href="https://github.com/rohanvarshney/barn_heuristic" target="_blank" rel="noopener noreferrer">View Repository on GitHub</a>
+    </p>
   </header>
 
   <ControlsPanel

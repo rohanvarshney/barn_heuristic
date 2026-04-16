@@ -110,4 +110,3 @@ export const interpolateScores = (before: number[], after: number[], t: number):
   const clampedT = Math.max(0, Math.min(1, t));
   return before.map((v, i) => v + (after[i] - v) * clampedT);
 };
-

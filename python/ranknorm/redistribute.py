@@ -63,8 +63,13 @@ def _zscore_sigmoid(values: list[float]) -> list[float]:
     if n <= 1:
         return values[:]
 
-    mean = sum(values) / n
-    variance = sum((v - mean) ** 2 for v in values) / n
+    s = 0.0
+    sq_s = 0.0
+    for v in values:
+        s += v
+        sq_s += v * v
+    mean = s / n
+    variance = max(0.0, (sq_s / n) - (mean * mean))
     std = math.sqrt(variance)
     if std < EPSILON:
         return _quantile_map(values)

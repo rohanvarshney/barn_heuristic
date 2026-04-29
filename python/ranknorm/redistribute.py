@@ -118,9 +118,11 @@ def _piecewise_bucket(values: list[float], buckets: int = 4) -> list[float]:
             mapped = _clamp((write_start + write_end) / 2.0)
             out[sorted_items[0].original_index] = mapped
         else:
+            denom = len(sorted_items) - 1
+            diff = write_end - write_start
             for pos, item in enumerate(sorted_items):
-                local_p = pos / (len(sorted_items) - 1)
-                mapped = write_start + local_p * (write_end - write_start)
+                local_p = pos / denom
+                mapped = write_start + local_p * diff
                 out[item.original_index] = _clamp(mapped)
         write_start = write_end
 

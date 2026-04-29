@@ -65,3 +65,15 @@ def test_unknown_strategy_raises_value_error():
     items = [{"score": 5.0}]
     with pytest.raises(ValueError, match="unknown strategy: invalid_strategy"):
         redistribute(items, lambda x: x["score"], strategy="invalid_strategy")
+
+
+def test_zscore_sigmoid_overflow():
+    # If the standard deviation is very small, z-scores can be very large
+    # negatively or positively.
+    # Previously, a large negative z-score caused math.exp(-z) to overflow.
+    items = [{"score": 5.0}] * 1000 + [{"score": 5.0 - 1e-4}]
+    try:
+        redistribute(items, lambda x: x["score"], strategy=Strategy.ZSCORE_SIGMOID)
+        assert True
+    except OverflowError:
+        assert False, "OverflowError was raised in ZSCORE_SIGMOID"

@@ -8,8 +8,6 @@ export type NormalizeOptions = {
   bucketCount?: number;
 };
 
-type ScoredItem = { index: number; score: number };
-
 const clamp = (v: number): number => {
   if (v <= 1.0) return MIN_SCORE;
   if (v > MAX_SCORE) return MAX_SCORE;
@@ -29,13 +27,13 @@ const quantileMap = (values: number[]): number[] => {
   const n = values.length;
   if (n <= 1) return [...values];
 
-  const ranked: ScoredItem[] = values.map((score, index) => ({ index, score }));
-  ranked.sort((a, b) => (a.score === b.score ? a.index - b.index : a.score - b.score));
+  const indices = Array.from({ length: n }, (_, i) => i);
+  indices.sort((a, b) => (values[a] === values[b] ? a - b : values[a] - values[b]));
 
   const out = new Array<number>(n);
-  ranked.forEach((item, rank) => {
+  indices.forEach((index, rank) => {
     const percentile = rank / (n - 1);
-    out[item.index] = MIN_SCORE + percentile * (MAX_SCORE - MIN_SCORE);
+    out[index] = MIN_SCORE + percentile * (MAX_SCORE - MIN_SCORE);
   });
   return out;
 };
@@ -62,12 +60,12 @@ const piecewiseBucket = (values: number[], bucketCount = 4): number[] => {
 
   const buckets = Math.max(2, bucketCount);
   const width = (MAX_SCORE - MIN_SCORE) / buckets;
-  const grouped: ScoredItem[][] = Array.from({ length: buckets }, () => []);
+  const grouped: number[][] = Array.from({ length: buckets }, () => []);
 
   values.forEach((score, index) => {
     const raw = width > 0 ? Math.floor((score - MIN_SCORE) / width) : 0;
     const bucketIdx = Math.max(0, Math.min(buckets - 1, raw));
-    grouped[bucketIdx].push({ index, score });
+    grouped[bucketIdx].push(index);
   });
 
   const out = new Array<number>(n).fill(MIN_SCORE);
@@ -78,14 +76,14 @@ const piecewiseBucket = (values: number[], bucketCount = 4): number[] => {
     if (items.length === 0) return;
     const span = (items.length / total) * (MAX_SCORE - MIN_SCORE);
     const writeEnd = Math.min(MAX_SCORE, writeStart + span);
-    items.sort((a, b) => (a.score === b.score ? a.index - b.index : a.score - b.score));
+    items.sort((a, b) => (values[a] === values[b] ? a - b : values[a] - values[b]));
 
     if (items.length === 1) {
-      out[items[0].index] = clamp((writeStart + writeEnd) / 2);
+      out[items[0]] = clamp((writeStart + writeEnd) / 2);
     } else {
-      items.forEach((item, pos) => {
+      items.forEach((index, pos) => {
         const p = pos / (items.length - 1);
-        out[item.index] = clamp(writeStart + p * (writeEnd - writeStart));
+        out[index] = clamp(writeStart + p * (writeEnd - writeStart));
       });
     }
 

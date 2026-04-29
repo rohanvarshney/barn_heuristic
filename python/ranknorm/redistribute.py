@@ -72,7 +72,10 @@ def _zscore_sigmoid(values: list[float]) -> list[float]:
     out: list[float] = []
     for value in values:
         z = (value - mean) / std
-        logistic = 1.0 / (1.0 + math.exp(-z))
+        if z < 0:
+            logistic = math.exp(z) / (1.0 + math.exp(z))
+        else:
+            logistic = 1.0 / (1.0 + math.exp(-z))
         mapped = MIN_SCORE + logistic * (MAX_SCORE - MIN_SCORE)
         out.append(_clamp(mapped))
     return out

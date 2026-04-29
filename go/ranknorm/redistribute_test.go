@@ -1,6 +1,9 @@
 package ranknorm
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 type sample struct {
 	ID    string
@@ -56,6 +59,14 @@ func TestOutOfRangeRejected(t *testing.T) {
 	_, err := Redistribute(items, func(s sample) float64 { return s.Score }, func(s *sample, v float64) { s.Score = v }, StrategyQuantileMap, nil)
 	if err == nil {
 		t.Fatalf("expected error for out-of-range score")
+	}
+}
+
+func TestNaNRejected(t *testing.T) {
+	items := []sample{{"x", math.NaN()}}
+	_, err := Redistribute(items, func(s sample) float64 { return s.Score }, func(s *sample, v float64) { s.Score = v }, StrategyQuantileMap, nil)
+	if err == nil {
+		t.Fatalf("expected error for NaN score")
 	}
 }
 

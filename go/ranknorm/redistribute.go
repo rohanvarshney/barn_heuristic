@@ -41,7 +41,7 @@ func clamp(v float64) float64 {
 
 func validateScores(scores []float64) error {
 	for _, s := range scores {
-		if s <= 1.0 || s > 10.0 {
+		if math.IsNaN(s) || s <= 1.0 || s > 10.0 {
 			return fmt.Errorf("score %.6f outside supported range (1.0, 10.0]", s)
 		}
 	}

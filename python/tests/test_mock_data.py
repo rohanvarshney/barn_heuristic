@@ -36,9 +36,13 @@ def test_generate_mock_user_ratings_invalid_inputs():
     with pytest.raises(ValueError, match="user_count must be > 0"):
         generate_mock_user_ratings(user_count=-1)
 
-    with pytest.raises(ValueError, match="min_restaurants and max_restaurants must be > 0"):
+    with pytest.raises(
+        ValueError, match="min_restaurants and max_restaurants must be > 0"
+    ):
         generate_mock_user_ratings(min_restaurants=0)
-    with pytest.raises(ValueError, match="min_restaurants and max_restaurants must be > 0"):
+    with pytest.raises(
+        ValueError, match="min_restaurants and max_restaurants must be > 0"
+    ):
         generate_mock_user_ratings(max_restaurants=0)
 
     with pytest.raises(ValueError, match="min_restaurants must be <= max_restaurants"):

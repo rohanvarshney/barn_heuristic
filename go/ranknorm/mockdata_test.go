@@ -53,3 +53,14 @@ func TestMockDataShapeAndBounds(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkFlattenRatings(b *testing.B) {
+	users, err := DefaultMockUsers()
+	if err != nil {
+		b.Fatalf("unexpected error: %v", err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		FlattenRatings(users)
+	}
+}

@@ -77,7 +77,11 @@ func DefaultMockUsers() ([]UserRatings, error) {
 }
 
 func FlattenRatings(users []UserRatings) []map[string]any {
-	out := make([]map[string]any, 0)
+	totalCapacity := 0
+	for _, u := range users {
+		totalCapacity += len(u.Ratings)
+	}
+	out := make([]map[string]any, 0, totalCapacity)
 	for _, u := range users {
 		for _, r := range u.Ratings {
 			out = append(out, map[string]any{

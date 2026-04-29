@@ -70,7 +70,7 @@ const piecewiseBucket = (values: number[], bucketCount = 4): number[] => {
     grouped[bucketIdx].push({ index, score });
   });
 
-  const out = new Array<number>(n).fill(MIN_SCORE);
+  const out = new Array<number>(n);
   let writeStart = MIN_SCORE;
   const total = n;
 

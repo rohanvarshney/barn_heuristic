@@ -49,12 +49,12 @@ def _quantile_map(values: list[float]) -> list[float]:
     if n == 1:
         return [values[0]]
 
-    ranked = sorted([(s, i) for i, s in enumerate(values)])
+    indices = sorted(range(n), key=values.__getitem__)
     out = [0.0] * n
-    for rank, item in enumerate(ranked):
+    for rank, idx in enumerate(indices):
         percentile = rank / (n - 1)
         mapped = MIN_SCORE + percentile * (MAX_SCORE - MIN_SCORE)
-        out[item[1]] = mapped
+        out[idx] = mapped
     return out
 
 

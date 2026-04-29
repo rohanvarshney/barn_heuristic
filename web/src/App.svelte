@@ -19,10 +19,9 @@
   let afterScores = $derived(normalizeScores(beforeScores, strategy, { bucketCount }));
   let currentScores = $derived(interpolateScores(beforeScores, afterScores, progress));
 
-  let scatterPoints = $derived(
+  let baseScatterPoints = $derived(
     items.map((item, i) => ({
       x: i / Math.max(1, items.length - 1),
-      y: currentScores[i],
       label: item.restaurantName,
     })),
   );
@@ -115,6 +114,6 @@
     <p><strong>Algorithm:</strong> {strategyDescription}</p>
   </section>
 
-  <ScatterView points={scatterPoints} title="Restaurant Score Motion (Before → After)" />
+  <ScatterView basePoints={baseScatterPoints} scores={currentScores} title="Restaurant Score Motion (Before → After)" />
   <DistributionView {beforeScores} {currentScores} {afterScores} bins={20} />
 </main>

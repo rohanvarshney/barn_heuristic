@@ -1,12 +1,13 @@
 <script lang="ts">
-  type Point = { x: number; y: number; label: string };
+  type BasePoint = { x: number; label: string };
 
   type Props = {
-    points: Point[];
+    basePoints: BasePoint[];
+    scores: number[];
     title?: string;
   };
 
-  let { points, title = 'Score Scatter' }: Props = $props();
+  let { basePoints, scores, title = 'Score Scatter' }: Props = $props();
 
   const width = 980;
   const height = 290;
@@ -27,9 +28,9 @@
       <text x="6" y={y(tick) + 4} class="tick">{tick.toFixed(1)}</text>
     {/each}
 
-    {#each points as point}
-      <circle cx={x(point.x)} cy={y(point.y)} r="2.2">
-        <title>{point.label}: {point.y.toFixed(3)}</title>
+    {#each basePoints as point, i}
+      <circle cx={x(point.x)} cy={y(scores[i])} r="2.2">
+        <title>{point.label}: {scores[i].toFixed(3)}</title>
       </circle>
     {/each}
   </svg>

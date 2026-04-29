@@ -44,16 +44,28 @@ const zscoreSigmoid = (values: number[]): number[] => {
   const n = values.length;
   if (n <= 1) return [...values];
 
-  const mean = values.reduce((acc, v) => acc + v, 0) / n;
-  const variance = values.reduce((acc, v) => acc + (v - mean) ** 2, 0) / n;
+  let sum = 0;
+  for (let i = 0; i < n; i++) {
+    sum += values[i];
+  }
+  const mean = sum / n;
+
+  let varianceSum = 0;
+  for (let i = 0; i < n; i++) {
+    const diff = values[i] - mean;
+    varianceSum += diff * diff;
+  }
+  const variance = varianceSum / n;
   const std = Math.sqrt(variance);
   if (std < EPSILON) return quantileMap(values);
 
-  return values.map((v) => {
-    const z = (v - mean) / std;
+  const out = new Array<number>(n);
+  for (let i = 0; i < n; i++) {
+    const z = (values[i] - mean) / std;
     const logistic = 1 / (1 + Math.exp(-z));
-    return clamp(MIN_SCORE + logistic * (MAX_SCORE - MIN_SCORE));
-  });
+    out[i] = clamp(MIN_SCORE + logistic * (MAX_SCORE - MIN_SCORE));
+  }
+  return out;
 };
 
 const piecewiseBucket = (values: number[], bucketCount = 4): number[] => {

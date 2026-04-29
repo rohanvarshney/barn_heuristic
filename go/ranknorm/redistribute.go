@@ -50,11 +50,8 @@ func validateScores(scores []float64) error {
 
 func quantileMap(values []float64) []float64 {
 	n := len(values)
-	if n == 0 {
-		return []float64{}
-	}
-	if n == 1 {
-		return []float64{values[0]}
+	if n <= 1 {
+		return values
 	}
 	ranked := make([]scoredItem, n)
 	for i, s := range values {
@@ -77,9 +74,7 @@ func quantileMap(values []float64) []float64 {
 func zscoreSigmoid(values []float64) []float64 {
 	n := len(values)
 	if n <= 1 {
-		out := make([]float64, n)
-		copy(out, values)
-		return out
+		return values
 	}
 	sum := 0.0
 	for _, v := range values {
@@ -108,9 +103,7 @@ func zscoreSigmoid(values []float64) []float64 {
 func piecewiseBucket(values []float64, buckets int) []float64 {
 	n := len(values)
 	if n <= 1 {
-		out := make([]float64, n)
-		copy(out, values)
-		return out
+		return values
 	}
 	if buckets < 2 {
 		buckets = 4

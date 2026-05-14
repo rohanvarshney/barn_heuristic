@@ -7,7 +7,7 @@ Cross-language SDK (Python + Go) for redistributing crowded numeric ratings on t
 
 ## Why this exists
 
-Many rating systems end up with heavy clustering in one band (for example, lots of values between `7.4` and `8.6`). That makes ranking less informative and reduces separation between items.
+Many rating systems end up with heavy clustering in one band (for example, lots of values between `7.9` and `8.6`). That makes ranking less informative and reduces separation between items.
 
 This SDK applies deterministic redistribution heuristics so downstream ranking, sorting, and recommendation systems can work with scores that are better spread across the available range.
 
